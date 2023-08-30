@@ -1,6 +1,6 @@
 package step4_01.string;
 
-// 미완!!
+// 2023-08-30 18:00 ~ 18:46
 import java.util.Scanner;
 
 /*
@@ -23,23 +23,26 @@ public class StringEx16_풀이 {
 		System.out.print("검색할 단어를 입력하세요 : ");
 		String word = scan.next();
 		
-		
-		int wordLength = word.length();
-		boolean flag = false;
-		for (int i = 0; i < text.length() - wordLength; i++) {
-			if (text.substring(i, i + wordLength) == word) flag = true;
-			else flag = false;
-		}
-		if (flag) System.out.println("true");
-		else System.out.println("false");
-	
-		
-//		word.charAt(0)
-//		word.charAt(1)
-//		...
-//		word.charAt(wordLength-2)
-//		word.charAt(wordLength-1)
 
+		char[] arr = new char[text.length()];
+		for (int i = 0; i < text.length(); i++) {
+			arr[i] = text.charAt(i);
+		}
+		
+		int wordSize = word.length();
+		boolean isSame = false;
+		for (int i = 0; i < text.length() - wordSize; i++) {
+			int correctCnt = 0;
+			for (int j = 0; j < word.length(); j++) {
+				if (arr[i+j] == word.charAt(j)) {
+					correctCnt++;
+				}
+			}
+			if (correctCnt == wordSize) isSame = true; 
+		}
+
+		if (isSame) System.out.println("true");
+		else System.out.println("false");
 	}
 }
 
