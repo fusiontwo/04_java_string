@@ -1,6 +1,6 @@
 package step4_01.string;
 
-// 미완!!!
+// 2023-09-01 17:20 ~ 17:57
 import java.util.Scanner;
 
 /*
@@ -39,7 +39,9 @@ public class StringEx12_풀이 {
 		
 		String[] items = {"사과", "바나나", "딸기"};
 		
-		int identifier = -1;  // 로그아웃(-1), qwer(1), javaking(2), abcd(3)
+		int identifier = -1;  // 로그아웃(-1), qwer(0), javaking(1), abcd(2)
+		
+		int cartCnt = 0;
 		
 		while(true) {
 			
@@ -54,16 +56,63 @@ public class StringEx12_풀이 {
 			int sel = scan.nextInt();
 			
 			if		(sel == 1) {
-				System.out.print("ID 입력 : ");
-				String id = scan.next();
-				System.out.print("PW 입력 : ");
-				String pw = scan.next();
-				
-				
+				if (identifier == -1) {
+					while(true) {
+						System.out.print("ID 입력 : ");
+						String id = scan.next();
+						System.out.print("PW 입력 : ");
+						String pw = scan.next();
+						
+						for(int i = 0; i < ids.length; i++) {
+							if (id.equals(ids[i]) && pw.contentEquals(pws[i])) {
+								identifier = i;
+							}
+						}
+						
+						if (identifier == -1) System.out.println("ID와 PW를 다시 확인하세요.");
+						else {
+							System.out.println(ids[identifier] + "로 로그인 되었습니다.");
+							break;
+						}
+					}
+				}
+				else if (identifier != -1) {
+					System.out.println("이미 " + ids[identifier] + "로 로그인 되어 있습니다.");
+				}
 			}
-			else if (sel == 2) {}
-			else if (sel == 3) {}
-			else if (sel == 4) {}
+			
+			else if (sel == 2) {
+				System.out.print(ids[identifier] + " 계정에서 로그아웃 하시겠습니까(yes, no)? ");
+				String approval = scan.next();
+				if (approval.equals("yes")) {
+					identifier = -1;
+					System.out.println("로그아웃 되었습니다.");
+				}
+				else if (approval.equals("no")) System.out.println("로그아웃 하지 않습니다.");
+			}
+			
+			else if (sel == 3) {
+				int itemNum = -1;
+				System.out.print("구매하려는 상품을 입력하시오 : ");
+				String boughtThing = scan.next();
+				for (int i = 0; i < items.length; i++) {
+					if (boughtThing.equals(items[i])) itemNum = i + 1; 
+				}
+				cart[cartCnt][0] = identifier;
+				cart[cartCnt][1] = itemNum;
+				if (cartCnt < cart.length - 1) cartCnt++;
+			}
+			
+			else if (sel == 4) {
+				for(int i = 0; i < cart.length; i++) {
+					if (cart[i][1] == 1 || cart[i][1] == 2 || cart[i][1] == 3) {
+						System.out.print(ids[cart[i][0]] + "회원   >    ");
+						System.out.println(items[cart[i][1]-1] + "구매");
+					}
+					else if (cart[i][1] != 1 && cart[i][1] != 2 && cart[i][1] != 3) break;
+				}
+			}
+			
 			else if (sel == 0) {
 				System.out.println("프로그램 종료");
 				break;
